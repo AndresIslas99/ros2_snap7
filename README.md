@@ -40,6 +40,25 @@ A ROS 2 driver for Siemens S7 PLCs (S7-300/S7-1200/S7-1500) using the [Snap7](ht
            └───────────────┘
 ```
 
+## Demo
+
+The project includes a PLC simulator for hardware-free testing:
+
+### 1. Start the PLC Simulator
+![PLC Simulator](docs/images/demo_simulator.png)
+
+### 2. Launch the ROS 2 Bridge Node
+![ROS 2 Bridge Node](docs/images/demo_node.png)
+
+### 3. Monitor Live Sensor Data
+![Topic Echo](docs/images/demo_topic_echo.png)
+
+### 4. Read/Write via Service Calls
+![Service Call](docs/images/demo_service_call.png)
+
+> To run this demo yourself, start the simulator with
+> `python3 scripts/plc_simulator.py` and use `plc_config_demo.yaml`.
+
 ## Packages
 
 | Package | Description |
