@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        include:
+          - ros_distro: humble
+            os: ubuntu-22.04
+          - ros_distro: jazzy
+            os: ubuntu-24.04
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+    container:
+      image: ros:${{ matrix.ros_distro }}-ros-base
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y python3-pip
+          pip3 install "python-snap7>=1.2,<2.0" pyyaml
+          rosdep update
+          rosdep install --from-paths . --ignore-src -r -y
+
+      - name: Build
+        run: |
+          source /opt/ros/${{ matrix.ros_distro }}/setup.bash
+          colcon build --packages-select ros2_snap7_interfaces
+          source install/setup.bash
+          colcon build --packages-select ros2_snap7
+
+      - name: Test
+        run: |
+          source /opt/ros/${{ matrix.ros_distro }}/setup.bash
+          source install/setup.bash
+          colcon test --packages-select ros2_snap7
+          colcon test-result --verbose

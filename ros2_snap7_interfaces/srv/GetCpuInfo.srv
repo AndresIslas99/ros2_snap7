@@ -1,0 +1,23 @@
+# Get CPU information from the PLC
+# Request is empty
+---
+# Whether the request was successful
+bool success
+
+# CPU module type name
+string module_type
+
+# Serial number
+string serial_number
+
+# AS name
+string as_name
+
+# Copyright string
+string copyright
+
+# Module name
+string module_name
+
+# Error message (empty on success)
+string message

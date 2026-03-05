@@ -1,0 +1,106 @@
+# ros2_snap7 PLC Configuration
+# See README.md for documentation
+
+connection:
+  ip: "192.168.0.1"
+  rack: 0
+  slot: 1
+  port: 102  # Use 1102 for the included PLC simulator
+
+read_groups:
+  - name: sensors
+    poll_rate_hz: 10.0
+    variables:
+      - name: temperature_reactor_1
+        area: DB
+        db_number: 1
+        byte_offset: 0
+        data_type: real
+
+      - name: pressure_reactor_1
+        area: DB
+        db_number: 1
+        byte_offset: 4
+        data_type: real
+
+      - name: flow_rate_inlet
+        area: DB
+        db_number: 1
+        byte_offset: 8
+        data_type: real
+
+      - name: level_tank_1
+        area: DB
+        db_number: 1
+        byte_offset: 12
+        data_type: int
+
+      - name: valve_open_sensor
+        area: DB
+        db_number: 1
+        byte_offset: 14
+        bit_offset: 0
+        data_type: bool
+
+  - name: status
+    poll_rate_hz: 1.0
+    variables:
+      - name: system_running
+        area: DB
+        db_number: 2
+        byte_offset: 0
+        bit_offset: 0
+        data_type: bool
+
+      - name: error_code
+        area: DB
+        db_number: 2
+        byte_offset: 2
+        data_type: dint
+
+      - name: operating_mode
+        area: DB
+        db_number: 2
+        byte_offset: 6
+        data_type: byte
+
+      - name: production_counter
+        area: DB
+        db_number: 2
+        byte_offset: 8
+        data_type: dword
+
+write_groups:
+  - name: commands
+    variables:
+      - name: setpoint_temperature
+        area: DB
+        db_number: 3
+        byte_offset: 0
+        data_type: real
+
+      - name: setpoint_pressure
+        area: DB
+        db_number: 3
+        byte_offset: 4
+        data_type: real
+
+      - name: start_command
+        area: DB
+        db_number: 3
+        byte_offset: 8
+        bit_offset: 0
+        data_type: bool
+
+      - name: stop_command
+        area: DB
+        db_number: 3
+        byte_offset: 8
+        bit_offset: 1
+        data_type: bool
+
+      - name: recipe_id
+        area: DB
+        db_number: 3
+        byte_offset: 10
+        data_type: int

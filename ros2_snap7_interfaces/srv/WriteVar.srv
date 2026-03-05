@@ -1,0 +1,25 @@
+# Write a single variable to the PLC
+
+# S7 area: DB, INPUT, OUTPUT, MERKER, COUNTER, TIMER
+string area
+
+# Data block number (only for area=DB)
+uint16 db_number
+
+# Byte offset
+uint32 byte_offset
+
+# Bit offset (0-7, for Bool)
+uint8 bit_offset
+
+# Data type: bool, byte, int, word, dint, dword, real, string
+string data_type
+
+# Value to write (as string)
+string value_string
+---
+# Whether the write was successful
+bool success
+
+# Error message (empty on success)
+string message

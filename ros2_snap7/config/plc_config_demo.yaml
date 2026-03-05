@@ -1,0 +1,108 @@
+# ros2_snap7 Demo Configuration
+# Connects to the local PLC simulator on port 1102
+# Usage: python3 scripts/plc_simulator.py  (in one terminal)
+#        ros2 launch ros2_snap7 snap7_bridge.launch.py config_file:=<path>/plc_config_demo.yaml
+
+connection:
+  ip: "127.0.0.1"
+  rack: 0
+  slot: 1
+  port: 1102
+
+read_groups:
+  - name: sensors
+    poll_rate_hz: 10.0
+    variables:
+      - name: temperature_reactor_1
+        area: DB
+        db_number: 1
+        byte_offset: 0
+        data_type: real
+
+      - name: pressure_reactor_1
+        area: DB
+        db_number: 1
+        byte_offset: 4
+        data_type: real
+
+      - name: flow_rate_inlet
+        area: DB
+        db_number: 1
+        byte_offset: 8
+        data_type: real
+
+      - name: level_tank_1
+        area: DB
+        db_number: 1
+        byte_offset: 12
+        data_type: int
+
+      - name: valve_open_sensor
+        area: DB
+        db_number: 1
+        byte_offset: 14
+        bit_offset: 0
+        data_type: bool
+
+  - name: status
+    poll_rate_hz: 1.0
+    variables:
+      - name: system_running
+        area: DB
+        db_number: 2
+        byte_offset: 0
+        bit_offset: 0
+        data_type: bool
+
+      - name: error_code
+        area: DB
+        db_number: 2
+        byte_offset: 2
+        data_type: dint
+
+      - name: operating_mode
+        area: DB
+        db_number: 2
+        byte_offset: 6
+        data_type: byte
+
+      - name: production_counter
+        area: DB
+        db_number: 2
+        byte_offset: 8
+        data_type: dword
+
+write_groups:
+  - name: commands
+    variables:
+      - name: setpoint_temperature
+        area: DB
+        db_number: 3
+        byte_offset: 0
+        data_type: real
+
+      - name: setpoint_pressure
+        area: DB
+        db_number: 3
+        byte_offset: 4
+        data_type: real
+
+      - name: start_command
+        area: DB
+        db_number: 3
+        byte_offset: 8
+        bit_offset: 0
+        data_type: bool
+
+      - name: stop_command
+        area: DB
+        db_number: 3
+        byte_offset: 8
+        bit_offset: 1
+        data_type: bool
+
+      - name: recipe_id
+        area: DB
+        db_number: 3
+        byte_offset: 10
+        data_type: int
